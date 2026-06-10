@@ -6,6 +6,7 @@
   --dusk: #8b9aab;
   --ink: #3d4543;
   --ink-soft: #6b7572;
+  --ink-faint: #8a9490;
   --card: rgba(255, 255, 255, 0.55);
   --card-border: rgba(255, 255, 255, 0.7);
   --shadow: 0 20px 60px rgba(90, 110, 100, 0.12);
@@ -21,6 +22,7 @@
   --dusk: #7f8f8a;
   --ink: #e8ece9;
   --ink-soft: #a3afa8;
+  --ink-faint: #7a8680;
   --card: rgba(30, 38, 36, 0.72);
   --card-border: rgba(255, 255, 255, 0.08);
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
@@ -229,10 +231,17 @@ h1 {
 }
 
 .now-vibe {
-  margin: 0.75rem 0 1.5rem;
+  margin: 0.75rem 0 0;
   font-size: 0.95rem;
   color: var(--ink-soft);
+}
+
+.now-whisper {
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.82rem;
   font-style: italic;
+  color: var(--ink-faint);
+  opacity: 0.85;
 }
 
 .now-actions {
@@ -392,6 +401,14 @@ h1 {
   font-size: 0.9rem;
   line-height: 1.55;
   color: var(--ink-soft);
+}
+
+.card-whisper {
+  margin-top: 0.55rem !important;
+  font-size: 0.78rem !important;
+  font-style: italic;
+  color: var(--ink-faint);
+  opacity: 0.85;
 }
 
 .card-tag {

@@ -12,6 +12,16 @@ import {
 import { builtInActivities, titleForId } from "./activities.js";
 import { isAmbientPlaying, toggleAmbient } from "./ambient.js";
 
+const categoryLabels = {
+  still: "be still",
+  senses: "use senses",
+  tiny: "tiny joys",
+  outside: "go outside-ish",
+  weird: "weird & fine",
+  secret: "almost nothing",
+  community: "from others",
+};
+
 const moodLabels = [
   { max: 15, text: "still carrying the world — that's okay" },
   { max: 30, text: "lightly burdened, mostly fog" },
@@ -39,6 +49,7 @@ let currentActivity = null;
 const els = {
   nowActivity: document.getElementById("now-activity"),
   nowVibe: document.getElementById("now-vibe"),
+  nowWhisper: document.getElementById("now-whisper"),
   btnAnother: document.getElementById("btn-another"),
   btnFavPick: document.getElementById("btn-fav-pick"),
   btnShare: document.getElementById("btn-share"),
@@ -120,6 +131,13 @@ function showSuggestion(activity) {
   currentActivity = activity;
   els.nowActivity.textContent = activity.title;
   els.nowVibe.textContent = activity.vibe;
+  if (activity.whisper) {
+    els.nowWhisper.textContent = activity.whisper;
+    els.nowWhisper.classList.remove("hidden");
+  } else {
+    els.nowWhisper.textContent = "";
+    els.nowWhisper.classList.add("hidden");
+  }
   els.btnNothingTimer.dataset.activityId = activity.id;
 }
 
@@ -216,7 +234,8 @@ function renderGrid() {
       <span class="card-emoji">${escapeHtml(activity.emoji)}</span>
       <h3>${escapeHtml(activity.title)}</h3>
       <p>${escapeHtml(activity.desc)}</p>
-      <span class="card-tag">${escapeHtml(activity.category)}</span>
+      ${activity.whisper ? `<p class="card-whisper">${escapeHtml(activity.whisper)}</p>` : ""}
+      <span class="card-tag">${escapeHtml(categoryLabels[activity.category] ?? activity.category)}</span>
     `;
 
     card.querySelector(".card-fav").addEventListener("click", (e) => {
