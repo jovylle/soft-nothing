@@ -1,7 +1,7 @@
 {
   "name": "soft nothing",
   "short_name": "soft nothing",
-  "description": "optional, deeply unproductive things to do",
+  "description": "optional, low-pressure things to do — idle or secretly productive",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f7f2ea",

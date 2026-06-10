@@ -18,7 +18,7 @@ const categoryLabels = {
   tiny: "tiny joys",
   outside: "go outside-ish",
   weird: "weird & fine",
-  secret: "almost nothing",
+  secret: "softly productive",
   community: "from others",
 };
 
