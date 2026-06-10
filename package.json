@@ -1,0 +1,18 @@
+{
+  "name": "soft-nothing",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.7.8",
+    "@netlify/functions": "^2.8.2"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}

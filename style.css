@@ -1,0 +1,528 @@
+:root {
+  --cream: #f7f2ea;
+  --blush: #f0d9d0;
+  --sage: #c8d5c4;
+  --mist: #d4e4ec;
+  --dusk: #8b9aab;
+  --ink: #3d4543;
+  --ink-soft: #6b7572;
+  --card: rgba(255, 255, 255, 0.55);
+  --card-border: rgba(255, 255, 255, 0.7);
+  --shadow: 0 20px 60px rgba(90, 110, 100, 0.12);
+  --radius: 24px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Outfit", system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--ink);
+  background: linear-gradient(165deg, var(--cream) 0%, var(--blush) 35%, var(--mist) 70%, var(--sage) 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+.sky {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 100px;
+  filter: blur(1px);
+  animation: drift linear infinite;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.cloud-1 {
+  width: 180px;
+  height: 50px;
+  top: 12%;
+  left: -200px;
+  animation-duration: 90s;
+}
+
+.cloud-1::before {
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  left: 30px;
+}
+
+.cloud-1::after {
+  width: 90px;
+  height: 90px;
+  top: -45px;
+  left: 80px;
+}
+
+.cloud-2 {
+  width: 140px;
+  height: 40px;
+  top: 28%;
+  left: -160px;
+  animation-duration: 120s;
+  animation-delay: -40s;
+  opacity: 0.7;
+}
+
+.cloud-2::before {
+  width: 55px;
+  height: 55px;
+  top: -28px;
+  left: 20px;
+}
+
+.cloud-2::after {
+  width: 70px;
+  height: 70px;
+  top: -38px;
+  left: 60px;
+}
+
+.cloud-3 {
+  width: 220px;
+  height: 55px;
+  top: 8%;
+  left: -240px;
+  animation-duration: 150s;
+  animation-delay: -80s;
+  opacity: 0.5;
+}
+
+.cloud-3::before {
+  width: 80px;
+  height: 80px;
+  top: -40px;
+  left: 40px;
+}
+
+.cloud-3::after {
+  width: 100px;
+  height: 100px;
+  top: -50px;
+  left: 100px;
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(100vw + 400px));
+  }
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dusk);
+}
+
+h1 {
+  margin: 0;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: clamp(2.8rem, 8vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.subtitle {
+  max-width: 520px;
+  margin: 1.25rem auto 0;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.now-panel {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.now-card,
+.timer-card,
+.mood-panel {
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.now-card {
+  padding: 2rem;
+  text-align: center;
+}
+
+.now-label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dusk);
+  margin-bottom: 1rem;
+}
+
+.now-activity {
+  margin: 0;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.now-vibe {
+  margin: 0.75rem 0 1.5rem;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.now-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: 0 8px 24px rgba(61, 69, 67, 0.2);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 12px 28px rgba(61, 69, 67, 0.25);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--ink);
+  border: 1px solid rgba(61, 69, 67, 0.12);
+}
+
+.timer-card {
+  padding: 2rem;
+  text-align: center;
+}
+
+.timer-card.hidden {
+  display: none;
+}
+
+.timer-label {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dusk);
+}
+
+.timer-display {
+  margin: 0.5rem 0;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-hint {
+  margin: 0 0 1.25rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.chip {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(61, 69, 67, 0.1);
+  background: rgba(255, 255, 255, 0.35);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.chip.active {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.card {
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 1.35rem;
+  box-shadow: 0 12px 40px rgba(90, 110, 100, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeUp 0.5s ease both;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 48px rgba(90, 110, 100, 0.14);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-emoji {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.card h3 {
+  margin: 0 0 0.4rem;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.card-tag {
+  display: inline-block;
+  margin-top: 0.85rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dusk);
+}
+
+.card-fav {
+  float: right;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: 0.35;
+  transition: opacity 0.2s, transform 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.card-fav:hover,
+.card-fav.active {
+  opacity: 1;
+}
+
+.card-fav.active {
+  transform: scale(1.1);
+}
+
+.mood-panel,
+.community-panel {
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.community-panel {
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.community-panel h2 {
+  margin: 0;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.community-sub {
+  margin: 0.4rem 0 1.5rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.community-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.community-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 160px;
+}
+
+.community-num {
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.community-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dusk);
+}
+
+.mood-panel {
+  margin-bottom: 2rem;
+}
+
+.mood-panel h2 {
+  margin: 0;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.mood-sub {
+  margin: 0.4rem 0 1.25rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+#mood-slider {
+  width: min(400px, 100%);
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+
+.mood-readout {
+  margin: 1rem 0 0;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.footer {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.footer p {
+  margin: 0.25rem 0;
+}
+
+.footer-stat {
+  margin-top: 0.75rem !important;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .now-card,
+  .timer-card {
+    padding: 1.5rem;
+  }
+
+  .timer-display {
+    font-size: 3rem;
+  }
+}

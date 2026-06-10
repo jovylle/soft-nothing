@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>soft nothing — things to do when you owe nothing to anyone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="sky" aria-hidden="true">
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
+    </div>
+
+    <main class="app">
+      <header class="hero">
+        <p class="eyebrow">no goals · no growth · no guilt</p>
+        <h1>soft nothing</h1>
+        <p class="subtitle">
+          a dashboard of completely optional, deeply unproductive things you
+          might enjoy doing right now. or not. that's fine too.
+        </p>
+      </header>
+
+      <section class="now-panel" aria-label="Right now">
+        <div class="now-card">
+          <span class="now-label">suggested for this exact moment</span>
+          <p class="now-activity" id="now-activity">…</p>
+          <p class="now-vibe" id="now-vibe"></p>
+          <div class="now-actions">
+            <button class="btn btn-primary" id="btn-another" type="button">
+              something else
+            </button>
+            <button class="btn btn-ghost" id="btn-nothing-timer" type="button">
+              do this for 5 min
+            </button>
+          </div>
+        </div>
+
+        <div class="timer-card hidden" id="timer-card" aria-live="polite">
+          <p class="timer-label">you are officially doing nothing</p>
+          <p class="timer-display" id="timer-display">5:00</p>
+          <p class="timer-hint" id="timer-hint">no phone. no optimizing. just exist.</p>
+          <button class="btn btn-ghost" id="btn-stop-timer" type="button">
+            i'm done being nothing
+          </button>
+        </div>
+      </section>
+
+      <section class="filters" aria-label="Filter activities">
+        <button class="chip active" data-filter="all" type="button">all</button>
+        <button class="chip" data-filter="still" type="button">be still</button>
+        <button class="chip" data-filter="senses" type="button">use senses</button>
+        <button class="chip" data-filter="tiny" type="button">tiny joys</button>
+        <button class="chip" data-filter="outside" type="button">go outside-ish</button>
+        <button class="chip" data-filter="weird" type="button">weird &amp; fine</button>
+      </section>
+
+      <section class="grid" id="activity-grid" aria-label="Activities"></section>
+
+      <section class="mood-panel">
+        <h2>how empty do you feel?</h2>
+        <p class="mood-sub">slide toward zero obligation</p>
+        <input
+          type="range"
+          id="mood-slider"
+          min="0"
+          max="100"
+          value="72"
+          aria-label="Emptiness level"
+        />
+        <p class="mood-readout" id="mood-readout">72% — pleasantly hollow</p>
+      </section>
+
+      <section class="community-panel" aria-label="Collective nothing">
+        <h2>collective nothing</h2>
+        <p class="community-sub">stored softly in netlify blobs. no accounts. just vibes.</p>
+        <div class="community-stats">
+          <div class="community-stat">
+            <span class="community-num" id="global-nothing">—</span>
+            <span class="community-label">nothing sessions completed</span>
+          </div>
+          <div class="community-stat">
+            <span class="community-num" id="global-mood">—</span>
+            <span class="community-label">avg collective emptiness</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>you don't have to do any of this. the page will still be here.</p>
+        <p class="footer-stat" id="footer-stat"></p>
+      </footer>
+    </main>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
