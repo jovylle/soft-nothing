@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A dashboard of optional, deeply unproductive things to do. No goals. No guilt."
+    />
+    <meta name="theme-color" content="#c8d5c4" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <title>soft nothing — things to do when you owe nothing to anyone</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,12 +18,30 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/style.css" />
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("soft-nothing-theme") === "dark") {
+            document.documentElement.dataset.theme = "dark";
+          }
+        } catch (_) {}
+      })();
+    </script>
   </head>
   <body>
     <div class="sky" aria-hidden="true">
       <div class="cloud cloud-1"></div>
       <div class="cloud cloud-2"></div>
       <div class="cloud cloud-3"></div>
+    </div>
+
+    <div class="toolbar" aria-label="Preferences">
+      <button class="toolbar-btn" id="btn-theme" type="button" aria-label="Toggle dark mode">
+        🌙
+      </button>
+      <button class="toolbar-btn" id="btn-ambient" type="button" aria-label="Toggle ambient sound">
+        🔇
+      </button>
     </div>
 
     <main class="app">
@@ -38,8 +63,20 @@
             <button class="btn btn-primary" id="btn-another" type="button">
               something else
             </button>
-            <button class="btn btn-ghost" id="btn-nothing-timer" type="button">
-              do this for 5 min
+            <button class="btn btn-ghost" id="btn-fav-pick" type="button">
+              from favorites
+            </button>
+            <button class="btn btn-ghost" id="btn-share" type="button">
+              copy suggestion
+            </button>
+          </div>
+          <div class="timer-row">
+            <span class="timer-row-label">do nothing for</span>
+            <button class="chip chip-sm timer-chip" data-minutes="1" type="button">1m</button>
+            <button class="chip chip-sm timer-chip active" data-minutes="5" type="button">5m</button>
+            <button class="chip chip-sm timer-chip" data-minutes="10" type="button">10m</button>
+            <button class="btn btn-ghost btn-sm" id="btn-nothing-timer" type="button">
+              start
             </button>
           </div>
         </div>
@@ -61,9 +98,45 @@
         <button class="chip" data-filter="tiny" type="button">tiny joys</button>
         <button class="chip" data-filter="outside" type="button">go outside-ish</button>
         <button class="chip" data-filter="weird" type="button">weird &amp; fine</button>
+        <button class="chip" data-filter="community" type="button">from others</button>
       </section>
 
       <section class="grid" id="activity-grid" aria-label="Activities"></section>
+
+      <section class="submit-panel" aria-label="Add a soft activity">
+        <h2>donate a soft activity</h2>
+        <p class="submit-sub">saved to netlify blobs. no login. no review queue. just vibes.</p>
+        <form class="submit-form" id="submit-form">
+          <div class="submit-row">
+            <label class="sr-only" for="submit-emoji">emoji</label>
+            <input id="submit-emoji" class="input input-emoji" maxlength="4" placeholder="✨" />
+            <label class="sr-only" for="submit-title">title</label>
+            <input id="submit-title" class="input" maxlength="80" placeholder="watch the ice melt" required />
+          </div>
+          <label class="sr-only" for="submit-desc">description</label>
+          <textarea
+            id="submit-desc"
+            class="input input-area"
+            maxlength="160"
+            rows="2"
+            placeholder="one slow sentence about why this counts as nothing"
+            required
+          ></textarea>
+          <div class="submit-row">
+            <label class="sr-only" for="submit-category">category</label>
+            <select id="submit-category" class="input">
+              <option value="still">be still</option>
+              <option value="senses">use senses</option>
+              <option value="tiny">tiny joys</option>
+              <option value="outside">go outside-ish</option>
+              <option value="weird">weird &amp; fine</option>
+              <option value="community" selected>from others</option>
+            </select>
+            <button class="btn btn-primary" type="submit">add softly</button>
+          </div>
+          <p class="submit-msg hidden" id="submit-msg" aria-live="polite"></p>
+        </form>
+      </section>
 
       <section class="mood-panel">
         <h2>how empty do you feel?</h2>
@@ -91,12 +164,19 @@
             <span class="community-num" id="global-mood">—</span>
             <span class="community-label">avg collective emptiness</span>
           </div>
+          <div class="community-stat community-stat-wide">
+            <span class="community-num community-num-sm" id="global-top">—</span>
+            <span class="community-label">most picked lately</span>
+          </div>
         </div>
       </section>
 
       <footer class="footer">
         <p>you don't have to do any of this. the page will still be here.</p>
         <p class="footer-stat" id="footer-stat"></p>
+        <p class="footer-links">
+          <a href="https://github.com/jovylle/soft-nothing" target="_blank" rel="noreferrer">github</a>
+        </p>
       </footer>
     </main>
 

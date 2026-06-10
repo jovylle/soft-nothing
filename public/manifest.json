@@ -1,0 +1,17 @@
+{
+  "name": "soft nothing",
+  "short_name": "soft nothing",
+  "description": "optional, deeply unproductive things to do",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f2ea",
+  "theme_color": "#c8d5c4",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

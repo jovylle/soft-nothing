@@ -59,3 +59,16 @@ export async function saveFavorites(visitorId, favorites) {
     body: JSON.stringify({ visitorId, favorites }),
   });
 }
+
+export async function fetchSubmissions() {
+  const data = await request("/submissions");
+  return data.submissions;
+}
+
+export async function submitActivity(payload) {
+  const data = await request("/submissions", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+  return data.submission;
+}

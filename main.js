@@ -1,207 +1,16 @@
 import {
   fetchStats,
   fetchFavorites,
+  fetchSubmissions,
   getVisitorId,
   recordMood,
   recordNothingDone,
   recordPick,
   saveFavorites,
+  submitActivity,
 } from "./api.js";
-
-const activities = [
-  {
-    id: "ceiling",
-    emoji: "👀",
-    title: "stare at the ceiling",
-    desc: "notice a crack you've never named. give it a nickname if you want. or don't.",
-    category: "still",
-    vibe: "zero input, maximum presence",
-  },
-  {
-    id: "clouds",
-    emoji: "☁️",
-    title: "watch clouds argue",
-    desc: "find shapes. lose the shapes. forget what shapes are.",
-    category: "outside",
-    vibe: "sky television, no subscription",
-  },
-  {
-    id: "water",
-    emoji: "💧",
-    title: "drink water like it's a ritual",
-    desc: "one slow sip. hold it. swallow. you are a temple of hydration.",
-    category: "tiny",
-    vibe: "ceremony without meaning",
-  },
-  {
-    id: "floor",
-    emoji: "🫠",
-    title: "lie on the floor",
-    desc: "gravity is doing the work. you're just cooperating.",
-    category: "still",
-    vibe: "horizontal enlightenment",
-  },
-  {
-    id: "pillow",
-    emoji: "🛏️",
-    title: "flip the pillow",
-    desc: "find the cold side. press your cheek into it. time stops briefly.",
-    category: "tiny",
-    vibe: "small luxury, big peace",
-  },
-  {
-    id: "window",
-    emoji: "🪟",
-    title: "open a window and listen",
-    desc: "birds, cars, wind, someone's distant lawnmower. the world hums.",
-    category: "senses",
-    vibe: "ambient reality playlist",
-  },
-  {
-    id: "tea",
-    emoji: "🍵",
-    title: "make tea and forget it",
-    desc: "the ritual matters. drinking it is optional. warmth in a mug is enough.",
-    category: "tiny",
-    vibe: "process over outcome",
-  },
-  {
-    id: "sock",
-    emoji: "🧦",
-    title: "find the comfiest sock",
-    desc: "put it on your hand. puppet optional. judgment forbidden.",
-    category: "weird",
-    vibe: "domestic absurdism",
-  },
-  {
-    id: "blink",
-    emoji: "😌",
-    title: "blink slowly, on purpose",
-    desc: "like a very calm lizard who has never heard of email.",
-    category: "still",
-    vibe: "reptile energy",
-  },
-  {
-    id: "shadow",
-    emoji: "🌿",
-    title: "sit in a patch of shade",
-    desc: "the sun moved for you. or you moved for the sun. either way, nice.",
-    category: "outside",
-    vibe: "borrowed coolness",
-  },
-  {
-    id: "smell",
-    emoji: "🌸",
-    title: "smell something nice",
-    desc: "soap, rain, old book, clean laundry. let your nose do a tiny vacation.",
-    category: "senses",
-    vibe: "olfactory daydream",
-  },
-  {
-    id: "stretch",
-    emoji: "🐱",
-    title: "stretch like a cat",
-    desc: "no fitness goals. just spine noises and dignity optional.",
-    category: "still",
-    vibe: "feline wisdom",
-  },
-  {
-    id: "hum",
-    emoji: "🎵",
-    title: "hum one note",
-    desc: "hold it until it gets boring. boredom is the point.",
-    category: "weird",
-    vibe: "single-frequency meditation",
-  },
-  {
-    id: "count",
-    emoji: "🍃",
-    title: "count five green things",
-    desc: "plants, socks, mugs, envy — anything counts if you squint.",
-    category: "outside",
-    vibe: "gentle scavenger hunt",
-  },
-  {
-    id: "breathe",
-    emoji: "🫁",
-    title: "breathe like you mean it",
-    desc: "in for four, out for six. or don't count. your lungs know what to do.",
-    category: "still",
-    vibe: "autopilot appreciation",
-  },
-  {
-    id: "hand",
-    emoji: "✋",
-    title: "look at your hands",
-    desc: "weird little meat tools you've had your whole life. hi, hands.",
-    category: "weird",
-    vibe: "body inventory",
-  },
-  {
-    id: "rain",
-    emoji: "🌧️",
-    title: "stand near rain without getting wet",
-    desc: "doorway, window, porch. listen to the sound of not being outside.",
-    category: "senses",
-    vibe: "dry observation",
-  },
-  {
-    id: "blanket",
-    emoji: "🧣",
-    title: "become a blanket burrito",
-    desc: "wrap up. immobilize slightly. accept your new cylindrical form.",
-    category: "tiny",
-    vibe: "soft containment",
-  },
-  {
-    id: "walk",
-    emoji: "🚶",
-    title: "walk with no destination",
-    desc: "turn left because left felt right. arrive nowhere. success.",
-    category: "outside",
-    vibe: "purposeless pilgrimage",
-  },
-  {
-    id: "pet",
-    emoji: "🐾",
-    title: "pet something soft",
-    desc: "pet, pillow, plant, your own arm. all valid. all soft enough.",
-    category: "tiny",
-    vibe: "texture therapy",
-  },
-  {
-    id: "dark",
-    emoji: "🌙",
-    title: "sit in dim light",
-    desc: "not full darkness. just enough to feel like evening at any hour.",
-    category: "senses",
-    vibe: "perpetual golden hour",
-  },
-  {
-    id: "exist",
-    emoji: "✨",
-    title: "exist aggressively",
-    desc: "you are here. that is the whole activity. no notes.",
-    category: "weird",
-    vibe: "pure being",
-  },
-  {
-    id: "rock",
-    emoji: "🪨",
-    title: "find a rock and admire it",
-    desc: "it has been through things. so have you. nod at each other.",
-    category: "outside",
-    vibe: "geological kinship",
-  },
-  {
-    id: "silence",
-    emoji: "🤫",
-    title: "enjoy three seconds of silence",
-    desc: "then notice the fridge hum you forgot existed. that's also fine.",
-    category: "senses",
-    vibe: "negative space appreciation",
-  },
-];
+import { builtInActivities, titleForId } from "./activities.js";
+import { isAmbientPlaying, toggleAmbient } from "./ambient.js";
 
 const moodLabels = [
   { max: 15, text: "still carrying the world — that's okay" },
@@ -214,18 +23,25 @@ const moodLabels = [
 ];
 
 const STORAGE_KEY = "soft-nothing-favs";
+const THEME_KEY = "soft-nothing-theme";
 const visitorId = getVisitorId();
 
+let communityActivities = [];
+let allActivities = [...builtInActivities];
 let currentFilter = "all";
 let favorites = new Set();
 let timerInterval = null;
 let timerSeconds = 0;
+let timerMinutes = 5;
 let moodDebounce = null;
+let currentActivity = null;
 
 const els = {
   nowActivity: document.getElementById("now-activity"),
   nowVibe: document.getElementById("now-vibe"),
   btnAnother: document.getElementById("btn-another"),
+  btnFavPick: document.getElementById("btn-fav-pick"),
+  btnShare: document.getElementById("btn-share"),
   btnNothingTimer: document.getElementById("btn-nothing-timer"),
   timerCard: document.getElementById("timer-card"),
   timerDisplay: document.getElementById("timer-display"),
@@ -237,6 +53,11 @@ const els = {
   footerStat: document.getElementById("footer-stat"),
   globalNothing: document.getElementById("global-nothing"),
   globalMood: document.getElementById("global-mood"),
+  globalTop: document.getElementById("global-top"),
+  btnTheme: document.getElementById("btn-theme"),
+  btnAmbient: document.getElementById("btn-ambient"),
+  submitForm: document.getElementById("submit-form"),
+  submitMsg: document.getElementById("submit-msg"),
 };
 
 function loadLocalFavorites() {
@@ -256,13 +77,12 @@ async function syncFavorites() {
   try {
     await saveFavorites(visitorId, [...favorites]);
   } catch {
-    // offline is fine. local hearts still work.
+    // offline is fine
   }
 }
 
 async function loadFavorites() {
   favorites = loadLocalFavorites();
-
   try {
     const remote = await fetchFavorites(visitorId);
     if (remote.length) {
@@ -270,20 +90,34 @@ async function loadFavorites() {
       saveLocalFavorites();
     }
   } catch {
-    // keep local copy
+    // keep local
   }
 }
 
-function pickRandom(list = activities) {
+async function loadCommunity() {
+  try {
+    communityActivities = await fetchSubmissions();
+    allActivities = [...builtInActivities, ...communityActivities];
+  } catch {
+    communityActivities = [];
+    allActivities = [...builtInActivities];
+  }
+}
+
+function pickRandom(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
 function getFiltered() {
-  if (currentFilter === "all") return activities;
-  return activities.filter((a) => a.category === currentFilter);
+  if (currentFilter === "all") return allActivities;
+  if (currentFilter === "community") {
+    return allActivities.filter((a) => a.category === "community" || a.id.startsWith("c-"));
+  }
+  return allActivities.filter((a) => a.category === currentFilter);
 }
 
 function showSuggestion(activity) {
+  currentActivity = activity;
   els.nowActivity.textContent = activity.title;
   els.nowVibe.textContent = activity.vibe;
   els.btnNothingTimer.dataset.activityId = activity.id;
@@ -291,12 +125,20 @@ function showSuggestion(activity) {
 
 function suggestNow({ track = true } = {}) {
   const pool = getFiltered();
-  const activity = pickRandom(pool.length ? pool : activities);
+  const activity = pickRandom(pool.length ? pool : allActivities);
   showSuggestion(activity);
+  if (track) recordPick(activity.id).catch(() => {});
+}
 
-  if (track) {
-    recordPick(activity.id).catch(() => {});
+function suggestFromFavorites() {
+  const favActs = allActivities.filter((a) => favorites.has(a.id));
+  if (!favActs.length) {
+    els.nowVibe.textContent = "no favorites yet — heart something first, or don't. also valid.";
+    return;
   }
+  const activity = pickRandom(favActs);
+  showSuggestion(activity);
+  recordPick(activity.id).catch(() => {});
 }
 
 function formatTime(seconds) {
@@ -305,7 +147,7 @@ function formatTime(seconds) {
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
-function startTimer(minutes = 5) {
+function startTimer(minutes = timerMinutes) {
   stopTimer(false);
   timerSeconds = minutes * 60;
   els.timerCard.classList.remove("hidden");
@@ -332,29 +174,38 @@ function stopTimer(showCard = true) {
     clearInterval(timerInterval);
     timerInterval = null;
   }
-  if (showCard) {
-    els.timerCard.classList.add("hidden");
-  }
+  if (showCard) els.timerCard.classList.add("hidden");
 }
 
 function toggleFavorite(id) {
-  if (favorites.has(id)) {
-    favorites.delete(id);
-  } else {
-    favorites.add(id);
-  }
+  if (favorites.has(id)) favorites.delete(id);
+  else favorites.add(id);
   syncFavorites();
   renderGrid();
   updateFooter();
+}
+
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 function renderGrid() {
   const filtered = getFiltered();
   els.grid.innerHTML = "";
 
+  if (!filtered.length) {
+    els.grid.innerHTML = `<p class="grid-empty">nothing here yet. the void is patient.</p>`;
+    return;
+  }
+
   filtered.forEach((activity, i) => {
     const card = document.createElement("article");
     card.className = "card";
+    if (activity.id.startsWith("c-")) card.classList.add("card-community");
     card.style.animationDelay = `${i * 0.04}s`;
 
     const isFav = favorites.has(activity.id);
@@ -362,10 +213,10 @@ function renderGrid() {
       <button class="card-fav ${isFav ? "active" : ""}" type="button" aria-label="Favorite" data-id="${activity.id}">
         ${isFav ? "♥" : "♡"}
       </button>
-      <span class="card-emoji">${activity.emoji}</span>
-      <h3>${activity.title}</h3>
-      <p>${activity.desc}</p>
-      <span class="card-tag">${activity.category}</span>
+      <span class="card-emoji">${escapeHtml(activity.emoji)}</span>
+      <h3>${escapeHtml(activity.title)}</h3>
+      <p>${escapeHtml(activity.desc)}</p>
+      <span class="card-tag">${escapeHtml(activity.category)}</span>
     `;
 
     card.querySelector(".card-fav").addEventListener("click", (e) => {
@@ -401,8 +252,8 @@ function updateFooter() {
   const favCount = favorites.size;
   const msg =
     favCount === 0
-      ? `${activities.length} ways to do nothing · no favorites yet (also fine)`
-      : `${activities.length} ways to do nothing · ${favCount} soft favorite${favCount === 1 ? "" : "s"}`;
+      ? `${allActivities.length} ways to do nothing · no favorites yet (also fine)`
+      : `${allActivities.length} ways to do nothing · ${favCount} soft favorite${favCount === 1 ? "" : "s"}`;
   els.footerStat.textContent = msg;
 }
 
@@ -412,15 +263,88 @@ async function loadCommunityStats() {
     els.globalNothing.textContent = String(stats.nothingSessions);
     els.globalMood.textContent =
       stats.avgMood === null ? "—" : `${stats.avgMood}%`;
+    els.globalTop.textContent = stats.topPick
+      ? `${titleForId(stats.topPick, communityActivities)} (${stats.topPickCount}×)`
+      : "—";
   } catch {
     els.globalNothing.textContent = "—";
     els.globalMood.textContent = "—";
+    els.globalTop.textContent = "—";
   }
 }
 
-document.querySelectorAll(".chip").forEach((chip) => {
+function setTheme(dark) {
+  if (dark) {
+    document.documentElement.dataset.theme = "dark";
+    localStorage.setItem(THEME_KEY, "dark");
+    els.btnTheme.textContent = "☀️";
+    els.btnTheme.setAttribute("aria-label", "Switch to light mode");
+    document.querySelector('meta[name="theme-color"]').content = "#1e2423";
+  } else {
+    delete document.documentElement.dataset.theme;
+    localStorage.setItem(THEME_KEY, "light");
+    els.btnTheme.textContent = "🌙";
+    els.btnTheme.setAttribute("aria-label", "Switch to dark mode");
+    document.querySelector('meta[name="theme-color"]').content = "#c8d5c4";
+  }
+}
+
+function updateAmbientBtn() {
+  els.btnAmbient.textContent = isAmbientPlaying() ? "🔊" : "🔇";
+  els.btnAmbient.setAttribute(
+    "aria-label",
+    isAmbientPlaying() ? "Turn off ambient sound" : "Turn on ambient sound",
+  );
+}
+
+async function handleShare() {
+  if (!currentActivity) return;
+  const text = `right now i could: ${currentActivity.title}\n— soft nothing · soft-nothing.netlify.app`;
+  try {
+    await navigator.clipboard.writeText(text);
+    const prev = els.nowVibe.textContent;
+    els.nowVibe.textContent = "copied. go do nothing, or don't share it. both fine.";
+    setTimeout(() => {
+      if (currentActivity) els.nowVibe.textContent = prev;
+    }, 2000);
+  } catch {
+    els.nowVibe.textContent = "couldn't copy. the suggestion remains yours alone.";
+  }
+}
+
+function showSubmitMsg(text, ok = true) {
+  els.submitMsg.textContent = text;
+  els.submitMsg.classList.remove("hidden", "error");
+  if (!ok) els.submitMsg.classList.add("error");
+  setTimeout(() => els.submitMsg.classList.add("hidden"), 3000);
+}
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const emoji = document.getElementById("submit-emoji").value.trim() || "✨";
+  const title = document.getElementById("submit-title").value.trim();
+  const desc = document.getElementById("submit-desc").value.trim();
+  const category = document.getElementById("submit-category").value;
+
+  try {
+    const submission = await submitActivity({ emoji, title, desc, category });
+    communityActivities.unshift(submission);
+    allActivities = [...builtInActivities, ...communityActivities];
+    els.submitForm.reset();
+    showSubmitMsg("added softly. the collective grows.");
+    renderGrid();
+    updateFooter();
+    if (currentFilter === "community" || currentFilter === "all") {
+      showSuggestion(submission);
+    }
+  } catch {
+    showSubmitMsg("couldn't save. try again when the void is ready.", false);
+  }
+}
+
+document.querySelectorAll(".chip[data-filter]").forEach((chip) => {
   chip.addEventListener("click", () => {
-    document.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+    document.querySelectorAll(".chip[data-filter]").forEach((c) => c.classList.remove("active"));
     chip.classList.add("active");
     currentFilter = chip.dataset.filter;
     renderGrid();
@@ -428,14 +352,34 @@ document.querySelectorAll(".chip").forEach((chip) => {
   });
 });
 
+document.querySelectorAll(".timer-chip").forEach((chip) => {
+  chip.addEventListener("click", () => {
+    document.querySelectorAll(".timer-chip").forEach((c) => c.classList.remove("active"));
+    chip.classList.add("active");
+    timerMinutes = Number(chip.dataset.minutes);
+  });
+});
+
 els.btnAnother.addEventListener("click", () => suggestNow());
-els.btnNothingTimer.addEventListener("click", () => startTimer(5));
+els.btnFavPick.addEventListener("click", () => suggestFromFavorites());
+els.btnShare.addEventListener("click", () => handleShare());
+els.btnNothingTimer.addEventListener("click", () => startTimer(timerMinutes));
 els.btnStopTimer.addEventListener("click", () => stopTimer());
 els.moodSlider.addEventListener("input", updateMood);
 els.moodSlider.addEventListener("change", queueMoodSync);
+els.btnTheme.addEventListener("click", () => {
+  setTheme(!document.documentElement.dataset.theme);
+});
+els.btnAmbient.addEventListener("click", async () => {
+  await toggleAmbient();
+  updateAmbientBtn();
+});
+els.submitForm.addEventListener("submit", handleSubmit);
 
 async function init() {
-  await loadFavorites();
+  setTheme(localStorage.getItem(THEME_KEY) === "dark");
+  updateAmbientBtn();
+  await Promise.all([loadFavorites(), loadCommunity()]);
   suggestNow({ track: false });
   renderGrid();
   updateMood();

@@ -10,6 +10,21 @@
   --card-border: rgba(255, 255, 255, 0.7);
   --shadow: 0 20px 60px rgba(90, 110, 100, 0.12);
   --radius: 24px;
+  --cloud: rgba(255, 255, 255, 0.45);
+}
+
+[data-theme="dark"] {
+  --cream: #141918;
+  --blush: #1a211f;
+  --sage: #24302c;
+  --mist: #1c2428;
+  --dusk: #7f8f8a;
+  --ink: #e8ece9;
+  --ink-soft: #a3afa8;
+  --card: rgba(30, 38, 36, 0.72);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  --cloud: rgba(255, 255, 255, 0.08);
 }
 
 *,
@@ -43,7 +58,7 @@ body {
 
 .cloud {
   position: absolute;
-  background: rgba(255, 255, 255, 0.45);
+  background: var(--cloud);
   border-radius: 100px;
   filter: blur(1px);
   animation: drift linear infinite;
@@ -512,6 +527,191 @@ h1 {
   opacity: 0.7;
 }
 
+.footer-links {
+  margin-top: 0.5rem !important;
+}
+
+.footer-links a {
+  color: var(--dusk);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--ink);
+}
+
+.toolbar {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.toolbar-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease;
+}
+
+.toolbar-btn:hover {
+  transform: translateY(-1px);
+}
+
+.timer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(61, 69, 67, 0.08);
+}
+
+[data-theme="dark"] .timer-row {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.timer-row-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dusk);
+  margin-right: 0.25rem;
+}
+
+.chip-sm {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.7rem;
+}
+
+.btn-sm {
+  font-size: 0.82rem;
+  padding: 0.45rem 0.9rem;
+}
+
+.submit-panel {
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.submit-panel h2 {
+  margin: 0;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.submit-sub {
+  margin: 0.4rem 0 1.25rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.submit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.submit-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.input {
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 300;
+  padding: 0.65rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid rgba(61, 69, 67, 0.12);
+  background: rgba(255, 255, 255, 0.45);
+  color: var(--ink);
+  flex: 1;
+  min-width: 0;
+}
+
+[data-theme="dark"] .input {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.input-emoji {
+  flex: 0 0 3.2rem;
+  text-align: center;
+}
+
+.input-area {
+  resize: vertical;
+  min-height: 3.5rem;
+}
+
+.submit-msg {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.submit-msg.error {
+  color: #a65d5d;
+}
+
+.card-community {
+  border-style: dashed;
+}
+
+.community-stat-wide {
+  min-width: 220px;
+}
+
+.community-num-sm {
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+
+.grid-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--ink-soft);
+  padding: 2rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 @media (max-width: 600px) {
   .app {
     padding: 2rem 1rem 3rem;
@@ -524,5 +724,14 @@ h1 {
 
   .timer-display {
     font-size: 3rem;
+  }
+
+  .toolbar {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .submit-panel {
+    padding: 1.5rem;
   }
 }
